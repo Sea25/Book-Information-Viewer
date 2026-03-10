@@ -16,41 +16,47 @@ function App() {
     <div className="app">
       <header className="header">
         <h1>Book Information Viewer</h1>
+        <p className="subtitle">Click a book to see full details</p>
       </header>
 
       <main className="main">
         <section className="book-list">
-          <h2>Books</h2>
-          <ul>
+          <div className="book-grid">
             {BOOKS.map((book) => (
-              <li
+              <article
                 key={book.id}
-                className={selectedBook?.id === book.id ? 'selected' : ''}
+                className={`book-card ${selectedBook?.id === book.id ? 'selected' : ''}`}
                 onClick={() => setSelectedBook(book)}
               >
-                {book.title}
-              </li>
+                <span className="book-year">{book.year}</span>
+                <h3 className="book-title">{book.title}</h3>
+                <p className="book-author">{book.author}</p>
+              </article>
             ))}
-          </ul>
+          </div>
         </section>
 
-        <section className="book-detail">
+        <aside className="book-detail">
           {selectedBook ? (
-            <>
-              <h2>Details</h2>
-              <dl>
-                <dt>Title</dt>
-                <dd>{selectedBook.title}</dd>
-                <dt>Author</dt>
-                <dd>{selectedBook.author}</dd>
-                <dt>Year</dt>
-                <dd>{selectedBook.year}</dd>
-              </dl>
-            </>
+            <div className="detail-card">
+              <span className="detail-badge">Selected</span>
+              <h2 className="detail-title">{selectedBook.title}</h2>
+              <div className="detail-meta">
+                <span className="detail-label">Author</span>
+                <p>{selectedBook.author}</p>
+              </div>
+              <div className="detail-meta">
+                <span className="detail-label">Year</span>
+                <p>{selectedBook.year}</p>
+              </div>
+            </div>
           ) : (
-            <p className="placeholder">Select a book to view details</p>
+            <div className="placeholder">
+              <span className="placeholder-icon">📖</span>
+              <p>Select a book to view its details</p>
+            </div>
           )}
-        </section>
+        </aside>
       </main>
     </div>
   )
